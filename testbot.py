@@ -1,18 +1,33 @@
+# Этот код является частью проекта для работы с Telegram-ботом 
+# используя библиотеку aiogram
+
+# Импортируем необходимые компоненты из библиотеки aiogram
 from aiogram import Bot, Dispatcher, executor, types
- 
-API_TOKEN = '6106957558:AAHBF_uAJzN9f6jleveGLHjafVrx0PAm6O8'
- 
+# Импортируем токен из конфигурационного файла
+from config import TOKEN
+
+# Определяем константу API_TOKEN, которая хранит токен для доступа к Телеграм-боту
+API_TOKEN = TOKEN
+
+# Инициализируем бота с помощью токена
 bot = Bot(token=API_TOKEN)
+# Инициализируем диспетчер, который будет обрабатывать события
 dp = Dispatcher(bot)
- 
+
+# Определяем обработчик сообщений для команды /start
 @dp.message_handler(commands=['start'])
 async def send_welcome(message: types.Message):
-   await message.reply("Деда сдесь не любят.")
+   # Отправляем пользователю сообщение "Выводим сообщение"
+   await message.reply("Выводим сообщение")
  
+# Определяем обработчик текстовых сообщений
 @dp.message_handler(content_types=['text'])
 async def text_handler(message):
-    if message.chat.type == 'private':
-        await bot.send_message(message.chat.id, 'Да пошел ты нахрен, козел')
- 
-if name == 'main':
+   # Проверяем, что сообщение пришло из личного чата
+   if message.chat.type == 'private':
+      # Отправляем пользователю сообщение "Реагирую на сообщение"
+      await bot.send_message(message.chat.id, 'Реагирую на сообщение')
+      
+# Если файл запущен как основной, то запускаем опрос обновлений
+if __name__ == '__main__':
    executor.start_polling(dp, skip_updates=True)
